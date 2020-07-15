@@ -2,7 +2,7 @@
 ## Functionality
 What this project is supposed to do:
 1. Get sold, view and review count from certain products
-2. Run frequently per hour to see traction
+2. Run frequently per interval to see traction
 
 ## Cron config
 This is what I use, please adjust accordingly;
