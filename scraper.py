@@ -91,7 +91,8 @@ for k in range(len(product_links)):
     except NoSuchElementException:
         product_viewcounts.append(None)
 
-inserted_time = [str(datetime.now())] * len(product_names)
+current_time = str(datetime.now())
+inserted_time = [current_time] * len(product_names)
 
 try:
     conn = pymysql.connect(host = os.environ['HAKASETEST_HOST'], 
@@ -109,5 +110,9 @@ except:
     print('fail to write {TP_RECENT_UPDATE}'.format(TP_RECENT_UPDATE=os.environ['TP_RECENT_UPDATE']))
 
 os.system('killall -9 Xvfb chromedriver')
+
+#log runtime and inserted_time
 end_time = datetime.now()
-print(end_time - start_time) #get script runtime
+log_runtime = 'runtime: ' + str(end_time - start_time)
+log_inserted_time = ' | inserted time: ' + current_time
+print(log_runtime + log_inserted_time)
