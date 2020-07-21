@@ -4,7 +4,7 @@ What this project is supposed to do:
 1. Get sold, view and review count from certain products
 2. Run frequently per interval to see traction
 
-## DB infra
+## DB config
 At the moment, I use MariaDB version 10.3.22. You can check whether yours is compatible with the script.
 
 The script relies on two tables; `keywords` and `recent_update`, with each tables contain these columns:
