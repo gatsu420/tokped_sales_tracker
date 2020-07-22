@@ -1,7 +1,7 @@
 # Tokped sales tracker
 ## Functionality
 What this project is supposed to do:
-1. Get sold, view and review count from certain products
+1. Get sold, view and review count from certain products (first search page only)
 2. Run frequently per interval to see traction
 
 ## DB config
