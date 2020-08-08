@@ -34,7 +34,7 @@ The script relies on two tables; `keywords` and `recent_update`, with each table
 
 5. `HAKASETEST_PASS`: database password
 
-Airflow will run the script using environment variables stored both in GUI and any file the OS would boot into (example: `/etc/environment`). This script uses the second one.
+Airflow will run the script using environment variables stored in GUI and any file the OS would boot into (example: `/etc/environment`).
 
 ## Cron config
 This is what I use, please adjust accordingly;

@@ -9,6 +9,7 @@ from selenium.common.exceptions import TimeoutException
 from datetime import datetime
 import os
 import pymysql
+from airflow.models import Variable
 import time
 import secrets
 import re
@@ -26,15 +27,15 @@ keyword_ids = []
 keyword_ids_tidy = []
 
 try:
-    conn = pymysql.connect(host = os.environ['HAKASETEST_HOST'], 
-                            user = os.environ['HAKASETEST_USER'],
-                            password = os.environ['HAKASETEST_PASS'])
+    conn = pymysql.connect(host = Variable.get('HAKASETEST_HOST'), 
+                            user = Variable.get('HAKASETEST_USER'),
+                            password = Variable.get('HAKASETEST_PASS'))
     cur = conn.cursor()
-    cur.execute('select * from {TP_KEYWORDS}'.format(TP_KEYWORDS=os.environ['TP_KEYWORDS']))
+    cur.execute('select * from {TP_KEYWORDS}'.format(TP_KEYWORDS=Variable.get('TP_KEYWORDS')))
     keywords_raw = cur.fetchall()
     conn.close()
 except:
-    print('fail to read {TP_KEYWORDS}'.format(TP_KEYWORDS=os.environ['TP_KEYWORDS']))
+    print('fail to read {TP_KEYWORDS}'.format(TP_KEYWORDS=Variable.get('TP_KEYWORDS')))
 
 display = Display(visible = 0, size = (800, 600))
 display.start()
@@ -95,19 +96,19 @@ current_time = str(datetime.now())
 inserted_time = [current_time] * len(product_names)
 
 try:
-    conn = pymysql.connect(host = os.environ['HAKASETEST_HOST'], 
-                            user = os.environ['HAKASETEST_USER'],
-                            password = os.environ['HAKASETEST_PASS'])
+    conn = pymysql.connect(host = Variable.get('HAKASETEST_HOST'), 
+                            user = Variable.get('HAKASETEST_USER'),
+                            password = Variable.get('HAKASETEST_PASS'))
     cur = conn.cursor()
     query = '''insert into {TP_RECENT_UPDATE} 
             (keyword_id, product_name, product_link, sold_count, review_count, view_count, inserted_time) values (%s, %s, %s, %s, %s, %s, %s)
-            '''.format(TP_RECENT_UPDATE=os.environ['TP_RECENT_UPDATE'])
+            '''.format(TP_RECENT_UPDATE=Variable.get('TP_RECENT_UPDATE'))
     recent_update = list(zip(keyword_ids_tidy, product_names, product_links_tidy, product_soldcounts, product_reviewcounts, product_viewcounts, inserted_time))
     cur.executemany(query, recent_update)
     conn.commit()
     conn.close()
 except:
-    print('fail to write {TP_RECENT_UPDATE}'.format(TP_RECENT_UPDATE=os.environ['TP_RECENT_UPDATE']))
+    print('fail to write {TP_RECENT_UPDATE}'.format(TP_RECENT_UPDATE=Variable.get('TP_RECENT_UPDATE')))
 
 os.system('killall -9 Xvfb chromedriver')
 
