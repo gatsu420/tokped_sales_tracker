@@ -34,12 +34,14 @@ The script relies on two tables; `keywords` and `recent_update`, with each table
 
 5. `HAKASETEST_PASS`: database password
 
+Airflow will run the script using environment variables stored both in GUI and any file the OS would boot into (example: `/etc/environment`). This script uses the second one.
+
 ## Cron config
 This is what I use, please adjust accordingly;
 
-`0 */3 * * * python3 /home/{username}/tokped_sales_tracker/scraper.py >> /home/{username}/tokped_sales_tracker/logs.txt && killall -9 chromedriver Xvfb`
+`python3 /home/{username}/tokped_sales_tracker/scraper.py >> /home/{username}/tokped_sales_tracker/logs.txt`
 
-Sometimes the script may fail due to various reasons (unstable internet, site going down, etc). The failed script will leave Chrome browser unclosed. To avoid unclosed browsers clogging the system, `chromedriver` and `Xvfb` can be killed manually.
+Sometimes the script may fail due to various reasons (unstable internet, site going down, etc). The failed script will leave Chrome browser unclosed. To avoid unclosed browsers clogging the system, `chromedriver` and `Xvfb` will be killed manually by scraper. Thus, no longer need `killall` command separately.
 
 ## License
 Copyright (C) 2020 Ranggalawe Istifajar
