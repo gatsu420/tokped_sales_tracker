@@ -55,7 +55,7 @@ for i in range(len(keywords_raw)):
 for j in range(len(keywords)):
     driver.get('https://www.tokopedia.com/search?st=product&ob=5&q=' + keywords[j])
     time.sleep(secrets.choice(range(5, 11)))
-    product_link_elements = driver.find_elements_by_class_name('css-89jnbj')
+    product_link_elements = driver.find_elements_by_class_name('css-gwkf0u')
 
     for ji in range(len(product_link_elements)):
         if 'https://ta.tokopedia.com' not in str(product_link_elements[ji].get_attribute('href')):
