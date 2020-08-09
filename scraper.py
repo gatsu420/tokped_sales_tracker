@@ -68,9 +68,12 @@ for k in range(len(product_links)):
     time.sleep(secrets.choice(range(3, 7)))
     #driver.save_screenshot('error_screenshot.png') #capture screenshot for element debugging
 
-    product_name = driver.find_element_by_class_name('css-x7lc0h').text 
-    product_names.append(product_name)
-    
+    try:
+        product_name = driver.find_element_by_class_name('css-x7lc0h').text 
+        product_names.append(product_name)
+    except NoSuchElementException:
+        product_names.append(None)
+
     product_link_tidy = driver.current_url.split('?', 1)[0]
     product_links_tidy.append(product_link_tidy)
 
